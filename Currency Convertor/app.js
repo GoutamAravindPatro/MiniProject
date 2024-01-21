@@ -3,7 +3,7 @@ const URL =
 
   const dropdowns = document.querySelectorAll(".dropdown select");
 
-  // 
+  // Updating the dropdown values 
   for (let select of dropdowns) {
     for (currCode in countryList) {
       let newOption = document.createElement("option");
@@ -16,4 +16,29 @@ const URL =
       }
       select.append(newOption);
     }
+}
+
+select.addEventListener("change", (evt) => {
+    updateFlag(evt.target);
+  });
+
+  const updateFlag = (element) => {
+    let currCode = element.value;
+    let countryCode = countryList[currCode];
+    let newSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
+    let img = element.parentElement.querySelector("img");
+    img.src = newSrc;
+  };
+
+const updateExchangeRate = async () => {
+  let amount = document.querySelector(".amount input");
+  let amtVal = amount.value;
+  if (amtVal === "" || amtVal < 1) {
+    amtVal = 1;
+    amount.value = "1";
+  }
+  const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}/${toCurr.value.toLowerCase()}.json`;
+  let response = await fetch(URL);
+  let data = await response.json();
+  let rate = data[toCurr.value.toLowerCase()];
 }
