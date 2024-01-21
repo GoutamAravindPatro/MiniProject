@@ -21,7 +21,7 @@ body {
 }
 
 form {
-  margin: 2rem 0 1rem 0;
+  margin: 1rem 0 1rem 0;
 }
 
 
@@ -82,4 +82,22 @@ form button {
   color: #fff;
   font-size: 1.15rem;
   cursor: pointer;
+}
+
+#theme-button { 
+  background-color: #84c5b2;
+  color: white;
+  width : 7rem;
+  border-radius: 5px;
+  height : 1.5rem;
+  cursor: pointer;
+}
+
+body.dark-mode {
+  background-color: #222;
+  color: #eee;
+}
+
+body.dark-mode #theme-button {
+  background-color: #333; /* Darker background for dark mode */
 }

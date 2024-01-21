@@ -1,4 +1,4 @@
-const URL =
+const BASE_URL =
   "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies";
 
   const dropdowns = document.querySelectorAll(".dropdown select");
@@ -6,6 +6,7 @@ const URL =
   const fromCurr = document.querySelector(".from select");
   const toCurr = document.querySelector(".to select");
   const msg = document.querySelector(".msg");
+  const themeButton = document.querySelector('#theme-button');
 
 
   // Updating the dropdown values 
@@ -21,12 +22,13 @@ const URL =
       }
       select.append(newOption);
     }
-}
 
 select.addEventListener("change", (evt) => {
     updateFlag(evt.target);
   });
+  }
 
+  //Updating the image based on the Country code set
   const updateFlag = (element) => {
     let currCode = element.value;
     let countryCode = countryList[currCode];
@@ -35,6 +37,7 @@ select.addEventListener("change", (evt) => {
     img.src = newSrc;
   };
 
+  //Finding the exchange rate based on the Countries selected
 const updateExchangeRate = async () => {
   let amount = document.querySelector(".amount input");
   let amtVal = amount.value;
@@ -46,4 +49,27 @@ const updateExchangeRate = async () => {
   let response = await fetch(URL);
   let data = await response.json();
   let rate = data[toCurr.value.toLowerCase()];
+
+  let finalAmount = amtVal * rate;
+  msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
 }
+
+btn.addEventListener("click", (evt) => {
+    evt.preventDefault();
+    updateExchangeRate();
+  });
+  
+  window.addEventListener("load", () => {
+    updateExchangeRate();
+  });
+
+  themeButton.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+
+  if (document.body.classList.contains('dark-mode')) {
+    themeButton.textContent = 'Light Mode';
+    document.querySelector("body").style.color = "black";
+  } else {
+    themeButton.textContent = 'Dark Mode';
+  }
+});
